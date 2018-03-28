@@ -1,48 +1,48 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
- /*
- @file DBControllerBase.php
-@brief Controller class for DB Objectify Base Controller Class.
-		The purpose of this class is to help generate html forms and handle posts
-		from pages back based on Objectify Model and DB Objects. The end goal is to speed up
-		page generation and let one just focus on the logic required. Input types will try to use latest 
-		allowed by browser accessing the page.
- 
-
-This system is done in dedication to my children. 
-To my son I pray and believe that one day you will get well and after all these years 
-of suffering you will be able to go and chase your dreams that has been taken from you
-with this illness. To my daugther I know you have lived in the shadow of your brothers
-illness all this time and want to thank you even when times are hard sometimes you always 
-are there for him and love him fully. You will become a wonderfull woman I believe one day.
-Love you with my whole heart.
- 
-@author Devorama
-@copyright Copyright (c) 2018  Devorama
-@license MIT
-@link  https://github.com/devorama/dbobjectify
-Version : 1.0
+/**
+* @file DBControllerBase.php
+* @brief Controller class for DB Objectify Base Controller Class.
+* 		The purpose of this class is to help generate html forms and handle posts
+* 		from pages back based on Objectify Model and DB Objects. The end goal is to speed up
+* 		page generation and let one just focus on the logic required. Input types will try to use latest 
+* 		allowed by browser accessing the page.
+*  
+* 
+* This system is done in dedication to my children. 
+* To my son I pray and believe that one day you will get well and after all these years 
+* of suffering you will be able to go and chase your dreams that has been taken from you
+* with this illness. To my daugther I know you have lived in the shadow of your brothers
+* illness all this time and want to thank you even when times are hard sometimes you always 
+* are there for him and love him fully. You will become a wonderfull woman I believe one day.
+* Love you with my whole heart.
+*  
+* @author Devorama
+* @copyright Copyright (c) 2018  Devorama
+* @license MIT
+* @link  https://github.com/devorama/dbobjectify
+* Version : 1.0
 */ 
 class DBControllerBase extends CI_Controller {
-	   /*
+	   /**
 	   @brief The goal is to have a array that will map the db fields used internally
 	   to form fields that are used client side for generation and handling posts
 	   from clients. If db field is not set the db fieldname itself is used
 	   */
 	   protected $db_form_field_mappings;
 	   
-	   /*
+	   /**
 	   @brief Each db field will be set to a default type based on its type, but if one wants to overwrite the default
 	   one can set the db field equal to a type on requires
 	   */
 	   protected $db_form_field_types;
 
-	   /*
+	   /**
 	   @brief If any extra definitions are required for input type of field one can add them here against the field and a string with all info
 	   */
 	   protected $db_form_field_extra;
 	   
-	   /*
+	   /**
 	   @brief If set the function will be called on listing type fields like select, lists and radio buttons to provide a array of items 
 				and the selected item back function must be defined as follows 
 				func($oDBObjects,$targettable,$targetfield,&$selectedkeyArray); 

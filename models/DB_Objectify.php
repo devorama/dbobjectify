@@ -1,33 +1,33 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
- /*
-@file DB_Objectify.php
-@brief Contains the logic to create MY_Model model classes and objects classes for database tables
- 
- DB_Objectify Model class
-
-Purpose of system is to generate php classes for database tables specified. 
-CodeIgniters configured database is used as source to work from
-Uses MY_Model (https://github.com/lonnieezell/my_model) in Models generated.
-
-Models and Controllers are generated for the objects as required.
-Linked Models (one master table, multiple children) can also be generated 
-based on config file.
-Sample Controller with display and manipulate functions can also be generated if required.
-Base classes are generated for each Object and Controller to help speed up development of 
-DB driven systems.
-
-This system is done in dedication to my children. 
-To my son I pray and believe that one day you will get well and after all these years 
-of suffering you will be able to go and chase your dreams that has been taken from you
-with this illness. To my daugther I know you have lived in the shadow of your brothers
-illness all this time and want to thank you even when times are hard sometimes you always 
-are there for him and love him fully. You will become a wonderfull woman I believe one day.
-Love you with my whole heart.
- 
-@author Devorama
-@copyright Copyright (c) 2018  Devorama
-@license MIT
-@link  https://github.com/devorama/dbobjectify
+/**
+* @file DB_Objectify.php
+* @brief Contains the logic to create MY_Model model classes and objects classes for database tables
+*  
+* DB_Objectify Model class
+* 
+* Purpose of system is to generate php classes for database tables specified. 
+* CodeIgniters configured database is used as source to work from
+* Uses MY_Model (https://github.com/lonnieezell/my_model) in Models generated.
+* 
+* Models and Controllers are generated for the objects as required.
+* Linked Models (one master table, multiple children) can also be generated 
+* based on config file.
+* Sample Controller with display and manipulate functions can also be generated if required.
+* Base classes are generated for each Object and Controller to help speed up development of 
+* DB driven systems.
+* 
+* This system is done in dedication to my children. 
+* To my son I pray and believe that one day you will get well and after all these years 
+* of suffering you will be able to go and chase your dreams that has been taken from you
+* with this illness. To my daugther I know you have lived in the shadow of your brothers
+* illness all this time and want to thank you even when times are hard sometimes you always 
+* are there for him and love him fully. You will become a wonderfull woman I believe one day.
+* Love you with my whole heart.
+*  
+* @author Devorama
+* @copyright Copyright (c) 2018  Devorama
+* @license MIT
+* @link  https://github.com/devorama/dbobjectify
 */ 
 /**
  *  
@@ -51,7 +51,7 @@ class DB_Objectify extends CI_Model {
 	 *  @details  Generate only objects for given table list
 	 */
 	public function generate_objects($all = true){
-		/*if (!$this->input->is_cli_request()) { 
+		/**if (!$this->input->is_cli_request()) { 
 		  return 1;
 		}*/
 		 $tables = null;  
@@ -577,7 +577,7 @@ class DB_Objectify extends CI_Model {
 			if ($field->primary_key) {
 			  $primarykeys = ' primary key'; 
 			}
-			$objectData .= "\t public \${$field->name}; \t\t\t /*Type : {$field->type} , Length : {$field->max_length} $primarykeys*/ \r\n";		
+			$objectData .= "\t public \${$field->name}; \t\t\t /**Type : {$field->type} , Length : {$field->max_length} $primarykeys*/ \r\n";		
 		}
 		$objectData  .= $this->build_field_def_func($table_fields_data,$table);		
 		$objectData .= "} \r\n?>";
@@ -601,7 +601,7 @@ class DB_Objectify extends CI_Model {
 		}
 
 		return "<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); \r\n ".
-				"/*\r\n $obectFileName \r\n".
+				"/**\r\n $obectFileName \r\n".
 				"Object class to represent the $table table. \r\n ".
 				"$filedate\r\n ".
 				"Target table : $table\r\n".
@@ -629,7 +629,7 @@ class DB_Objectify extends CI_Model {
 			$filedate = 'Date : '.date ("Y-m-d");
 		}
  		return	"<?php if (!defined('BASEPATH')) exit('No direct script access allowed');\r\n ".
-				"/*\r\n $modelFileName \r\n".
+				"/**\r\n $modelFileName \r\n".
 				"Model class to represent the $table table. \r\n ".
 				"$filedate\r\n ".
 				"Target table : $table\r\n".
@@ -663,7 +663,7 @@ class DB_Objectify extends CI_Model {
 			$filedate = 'Date : '.date ("Y-m-d");
 		}
  		$sData =	"<?php if (!defined('BASEPATH')) exit('No direct script access allowed');\r\n ".
-				"/*\r\n $linkFileName \r\n".
+				"/**\r\n $linkFileName \r\n".
 				"Model class to represent the $table table. \r\n ".
 				"$filedate\r\n ".
 				"Target table : $table\r\n".
@@ -673,7 +673,7 @@ class DB_Objectify extends CI_Model {
 		$sVar = '$o'.ucwords(strtolower($table),'_');
 		$sData .= "\r\n".
 				"class $linkFileName  extends CI_Model { \r\n".
-				"\t\t public $sVar; /*Master table*/\r\n".
+				"\t\t public $sVar; /**Master table*/\r\n".
 				"\r\n\r\n";
 		foreach ($childTables as $childname){
 			 $sVar = '$o'.$childname;
