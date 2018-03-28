@@ -12,7 +12,7 @@ Sample Controller with display and manipulate functions can also be generated if
 Base classes are generated for each Object and Controller to help speed up development of 
 DB driven systems.
 
-##Dedication
+# Dedication
 This system is done in dedication to my children. 
 To my son I pray and believe that one day you will get well and after all these years 
 of suffering you will be able to go and chase your dreams that has been taken from you
