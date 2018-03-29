@@ -24,7 +24,7 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "DB Objectify", "index.html", [
-    [ "dbobjectify", "md_dbobjectify__r_e_a_d_m_e.html", null ],
+    [ "DB Objectify", "md_dbobjectify__r_e_a_d_m_e.html", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],

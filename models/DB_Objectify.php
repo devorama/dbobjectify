@@ -113,7 +113,7 @@ class DB_Objectify extends CI_Model {
 		 if (isset($tables)) {
 			 $this->config->load('dbobjectify');
 			 $outputdir = $this->config->item('dbobj_model_dir');
-			 $controller_outputdir = $this->config->item('dbobj_model_dir');
+			 $controller_outputdir = $this->config->item('dbobj_controller_dir');
 			 $object_prefix = $this->config->item('dbobj_dbobject_prefix');
 			 $model_prefix = $this->config->item('dbobj_model_prefix');
 			 $link_prefix = $this->config->item('dbobj_link_prefix');
@@ -188,6 +188,14 @@ class DB_Objectify extends CI_Model {
 			$childTables[] = $tnameuse;
 			$obectFileName = $object_prefix.$tnameuse ;
 			$obectFileNames[] = $obectFileName;
+			if ((isset($childdata['children'])) && (is_array($childdata['children']))) {
+				foreach ($childdata['children'] as $subchildtable => $subchilddata) {
+					$tnameuse = ucwords(strtolower($subchildtable),'_'); 
+					$childTables[] = $tnameuse;
+					$obectFileName = $object_prefix.$tnameuse ;
+					$obectFileNames[] = $obectFileName;
+				}
+			}
 		}
 		$linkData = $this->get_link_header($mastertable,$obectFileNames,$childTables,$linkFileName);
 		$linkData .= $this->generate_link_opendata_func($mastertable,$masterfield,$children,$linkFileName,$childTables);
@@ -195,6 +203,74 @@ class DB_Objectify extends CI_Model {
 		return $linkData;
 		
 	}
+	
+	
+	/**
+	 *  @brief Generate find function for each child for easy retrieval of data based on key configuration
+	 *  
+	 *  @param [in] $children Array of children that funcion needs to get generated for (if inner children exist they must also generate find functions)
+	 *  @return String that represent all the find functions for children
+	 *  
+	 *  @details Generate find function for each child for easy retrieval of data based on key configuration.
+	 */
+	private function generate_link_find_functions($children){
+		$model_prefix = $this->config->item('dbobj_model_prefix');
+		$sData = '';
+		foreach ($children as $childtable => $childdata) {
+			$childkey = $childdata['child_key'];	
+			$childfield = $childdata['child_field'];
+			$child_master_field = $childdata['master_field'];
+			$modelFileName = strtolower($model_prefix.$childtable);		
+			$sVar = 'o'.ucwords(strtolower($childtable),'_');	
+			$sData .= "\t\t\t\t\t \$this->load_child_data(\$this->$modelFileName,'$childkey',$targetObject->{$child_master_field},'$childfield',\$this->$sVar);\r\n";
+			if ((isset($childdata['children'])) && (is_array($childdata['children']))) {
+				$tmptargetObject = "\$tmpC_".$sVar;
+				$sData .= "\t\t\t\t\t if (isset(\$this->$sVar)) { \r\n".
+					 "\t\t\t\t\t\t foreach(\$this->$sVar as $tmptargetObject) { \r\n";
+					$sData .= "\t\t".$this->generate_link_find_functions($childdata['children']);	 
+				
+				$sData .="\t\t\t\t\t\t } //end for \r\n";
+				$sData .="\t\t\t\t\t } //end if \r\n";
+					
+			}
+		}		
+		return $sData;
+
+	}
+	
+	/**
+	 *  @brief Generates the child loading logic that is inside generate_link_opendata_func,child can have its own childs etc, thus the logic must be ready to handle that.
+	 *  
+	 *  @param [in] $children Array of children linked against master table (link info in array)
+	 *  @param [in] $model_prefix Prefix read from config file
+	 *  @param [in] $targetObject Target object that is serving as master dataset
+	 *  @return String reprents the child loading section inside the generate_link_opendata_func function
+	 *  
+	 *  @details Generates the child loading logic that is inside generate_link_opendata_func,child can have its own childs etc, thus the logic must be ready to handle that.
+	 */
+	private function generate_lnk_opendata_childloads($children,$model_prefix,$targetObject = '$oMaster'){
+		$sData = '';
+		foreach ($children as $childtable => $childdata) {
+			$childkey = $childdata['child_key'];	
+			$childfield = $childdata['child_field'];
+			$child_master_field = $childdata['master_field'];
+			$modelFileName = strtolower($model_prefix.$childtable);		
+			$sVar = 'o'.ucwords(strtolower($childtable),'_');	
+			$sData .= "\t\t\t\t\t \$this->load_child_data(\$this->$modelFileName,'$childkey',$targetObject->{$child_master_field},'$childfield',\$this->$sVar);\r\n";
+			if ((isset($childdata['children'])) && (is_array($childdata['children']))) {
+				$tmptargetObject = "\$tmpC_".$sVar;
+				$sData .= "\t\t\t\t\t if (isset(\$this->$sVar)) { \r\n".
+					 "\t\t\t\t\t\t foreach(\$this->$sVar as $tmptargetObject) { \r\n";
+					$sData .= "\t\t".$this->generate_lnk_opendata_childloads($childdata['children'],$model_prefix,$tmptargetObject);	 
+				
+				$sData .="\t\t\t\t\t\t } //end for \r\n";
+				$sData .="\t\t\t\t\t } //end if \r\n";
+					
+			}
+		}		
+		return $sData;
+	}
+	
 	/**
 	 *  @brief Generate the open_data function that the link module use to align all data objects against masterkey id
 	 *  
@@ -257,15 +333,8 @@ class DB_Objectify extends CI_Model {
 				 "\t\t\t if (isset(\$this->$sVar)) { \r\n".
 				 "\t\t\t\t foreach(\$this->$sVar as \$oMaster) { \r\n";
 				 
-			foreach ($children as $childtable => $childdata) {
-				$childkey = $childdata['child_key'];	
-				$childfield = $childdata['child_field'];
-				$child_master_field = $childdata['master_field'];
-				$modelFileName = strtolower($model_prefix.$childtable);		
-				$sVar = 'o'.ucwords(strtolower($childtable),'_');	
-				$sData .= "\t\t\t\t\t \$this->load_child_data(\$this->$modelFileName,'$childkey',\$oMaster->{$child_master_field},'$childfield',\$this->$sVar);\r\n";
-			}		
-		
+		$sData .= $this->generate_lnk_opendata_childloads($children,$model_prefix);	 
+	
 		$sData .="\t\t\t\t } //end for \r\n";
 		$sVar = 'o'.ucwords(strtolower($mastertable),'_');	
         $modelFileName = strtolower($model_prefix.$mastertable);		
