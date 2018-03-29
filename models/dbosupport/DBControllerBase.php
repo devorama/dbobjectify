@@ -65,6 +65,41 @@ class DBControllerBase extends CI_Controller {
 		 }   
 		 
 		 /**
+		  *  @brief Creates a custom input multiselect (select,list,radio) control.
+		  *  
+		  *  @param [in] $oDBObject The DB Object you want to pass to the form listing function (form_listfield_func)
+		  *  @param [in] $field The field name you want to pass to the form listing function (form_listfield_func)
+		  *  @param [in] $inpArr Array exactly the same as the default array passed to CI's form_input function. Has to have id,class,name,type (list,radio,select) at the minimum
+		  *  @return Strring representing control
+		  *  
+		  *  @details Creates a custom input multiselect (select,list,radio) control. Control info is not received from object but passed to function. $inpArr is same design as CI form_input functions
+		  */
+		 public function build_custom_grouptype_input($oDBObject,$field,$inpArr){
+			 $returnS = '';
+			 if ((isset($this->form_listfield_func))) {
+				$selectID = array();
+				$fname = $this->form_listfield_func;
+				$dbTableName = $oDBObject->get_tablename();
+				$list = call_user_func_array(array($this,$fname), array($oDBObject,$dbTableName,$field,&$selectID));
+				$extra = ' id = '.$inpArr['id'].' class = '.$inpArr['class'];
+				if ($inpArr['type'] == 'select') {
+					$returnS .=  form_dropdown($inpArr['name'],$list,$selectID,$extra);
+					
+				} else if ($inpArr['type'] == 'list') {
+					$returnS .=  form_multiselect($inpArr['name'],$list,$selectID,$extra);	
+				} else if ($inpArr['type'] == 'radio') {
+					foreach ($list as $key => $val) {
+						$inpArr['value'] = $key;
+						$returnS .= form_radio($inpArr,$key,($key == $selectID[0]),$extra).$val;
+					}
+				}	
+			} else {
+				$returnS .=  form_input($inpArr,$inpArr['value'],$extra);
+			}
+			return $returnS;
+		 }
+		 
+		 /**
 		  *  @brief Builds a input controls based on the database objects passed and the array of fields that must be created for objects.
 		  *  
 		  *  @param [in] $oDBObject The database objects created with a objectifyer model that containts the data. This objects is used to get field names and types.

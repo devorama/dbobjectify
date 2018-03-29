@@ -68,11 +68,17 @@ $(document).ready(function(){initNavTree('md_dbobjectify__r_e_a_d_m_e.html','');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>Tool that converts database tables into objects and creates models and controllers to work with data. Based on CodeIgniter and my_model</p>
-<p>Purpose of system is to generate php classes for database tables specified with models and controllers. CodeIgniters configured database is used as source to work from Uses MY_Model (<a href="https://github.com/lonnieezell/my_model">https://github.com/lonnieezell/my_model</a>) in Models generated.</p>
-<p>Models and Controllers are generated for the objects as required.</p>
+<p>The purpose of this class is to generate MY_Module and Objects for the specified tables</p>
+<p>Note generated files will be placed in the configured [dbobj_output] path in dbobjectify.php in the config directory a subdir in the output path will be created called dbobjects that holds the objects for each table each table object will have a basic Module that inherits from MY_Module with basic settings</p>
+<p>CodeIgniters configured database is used as source to work from</p>
+<p>Uses MY_Model (<a href="https://github.com/lonnieezell/my_model">https://github.com/lonnieezell/my_model</a>) in Models generated.</p>
 <p>Linked Models (one master table, multiple children) can also be generated based on config file.</p>
 <p>Sample Controller with display and manipulate functions can also be generated if required.</p>
 <p>Base classes are generated for each Object and Controller to help speed up development of DB driven systems.</p>
+<h1>Install</h1>
+<p>Clone / Download to CI directory of choice Clone / Download MY_Model <a href="https://github.com/lonnieezell/my_model">https://github.com/lonnieezell/my_model</a> and install MY_Model.php in models directory of CI Configure dbobjectify.php in config directory (makre sure models and controllers directories are set)</p>
+<h1>Run</h1>
+<p>generateall - will generate object and module for all tables in configured db generatetable - will generate object and module for specified table in configured db : url param name [table] objectsonlyall - will generate object only for all tables in configured db objectsonlytable - will generate object only for specified table in configured db : url param name [table]</p>
 <h1>Dedication</h1>
 <p>This system is done in dedication to my children. To my son I pray and believe that one day you will get well and after all these years of suffering you will be able to go and chase your dreams that has been taken from you with this illness. To my daugther I know you have lived in the shadow of your brothers illness all this time and want to thank you even when times are hard sometimes you always are there for him and love him fully. You will become a wonderfull woman I believe one day. Love you with my whole heart.</p>
 <dl class="section author"><dt>Author</dt><dd>Devorama </dd></dl>

@@ -84,6 +84,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a095c5d389db211932136b53f25f39685"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_controller_base.html#a095c5d389db211932136b53f25f39685">__construct</a> ()</td></tr>
 <tr class="memdesc:a095c5d389db211932136b53f25f39685"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for model call.  <a href="#a095c5d389db211932136b53f25f39685">More...</a><br /></td></tr>
 <tr class="separator:a095c5d389db211932136b53f25f39685"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eca542f0126748bcae889cc75e110d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_controller_base.html#a9eca542f0126748bcae889cc75e110d4">build_custom_grouptype_input</a> ($oDBObject, $field, $inpArr)</td></tr>
+<tr class="memdesc:a9eca542f0126748bcae889cc75e110d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a custom input multiselect (select,list,radio) control.  <a href="#a9eca542f0126748bcae889cc75e110d4">More...</a><br /></td></tr>
+<tr class="separator:a9eca542f0126748bcae889cc75e110d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ef6cfccd46224049356e07e8b966cb4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_controller_base.html#a6ef6cfccd46224049356e07e8b966cb4">build_input_controls</a> ($oDBObject, $aFieldlist, $aOptions)</td></tr>
 <tr class="memdesc:a6ef6cfccd46224049356e07e8b966cb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a input controls based on the database objects passed and the array of fields that must be created for objects.  <a href="#a6ef6cfccd46224049356e07e8b966cb4">More...</a><br /></td></tr>
 <tr class="separator:a6ef6cfccd46224049356e07e8b966cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,6 +134,54 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9eca542f0126748bcae889cc75e110d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9eca542f0126748bcae889cc75e110d4">&#9670;&nbsp;</a></span>build_custom_grouptype_input()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">build_custom_grouptype_input </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$oDBObject</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$inpArr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a custom input multiselect (select,list,radio) control. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">$oDBObject</td><td>The DB Object you want to pass to the form listing function (form_listfield_func) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">$field</td><td>The field name you want to pass to the form listing function (form_listfield_func) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">$inpArr</td><td>Array exactly the same as the default array passed to CI's form_input function. Has to have id,class,name,type (list,radio,select) at the minimum </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Strring representing control</dd></dl>
+<p>Creates a custom input multiselect (select,list,radio) control. Control info is not received from object but passed to function. $inpArr is same design as CI form_input functions </p>
+
+<p class="definition">Definition at line <a class="el" href="_d_b_controller_base_8php_source.html#l00077">77</a> of file <a class="el" href="_d_b_controller_base_8php_source.html">DBControllerBase.php</a>.</p>
+
+</div>
+</div>
 <a id="a6ef6cfccd46224049356e07e8b966cb4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6ef6cfccd46224049356e07e8b966cb4">&#9670;&nbsp;</a></span>build_input_controls()</h2>
 
@@ -175,7 +226,7 @@ Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>String that represents all the input fielsds requisted</dd></dl>
 <p>Builds a input controls based on the database objects passed and the array of fields that must be created for objects. </p>
 
-<p class="definition">Definition at line <a class="el" href="_d_b_controller_base_8php_source.html#l00082">82</a> of file <a class="el" href="_d_b_controller_base_8php_source.html">DBControllerBase.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_b_controller_base_8php_source.html#l00117">117</a> of file <a class="el" href="_d_b_controller_base_8php_source.html">DBControllerBase.php</a>.</p>
 
 </div>
 </div>

@@ -54,26 +54,32 @@ all child tables and there foreign keys and master table related fields
 
 for example:
 
-array( 
-		'flowers' => array(
-							'key' => 'ipkFlowerID',
-							'children' => array('colors' => array(
-																		'child_key' => 'ipkColorID',
-																		'child_field' => 'ipkColorID',
-																		'master_field' => 'ifkColorID'
-																	),	
-												'smells' => array(
-																		'child_key' => 'ipkSmellID',
-																		'child_field' => 'ipkSmellID',
-																		'master_field' => 'ifkSmellID'
-																	)
-									
-												)
-							)							
-							
-	  );
+array(
+	'flowers' => array(
+					'key' => 'ipkFlowerID',
+					'children' => array(
+									'flower_color_lnk' => array(
+															'child_key' => 'ipkLinkID',
+															'child_field' => 'ifkFlowerID',
+															'master_field' => 'ipkFlowerID',
+															'children' => array(
+																			'colors' => array(
+																							'child_key' => 'ipkColorID',
+																							'child_field' => 'ipkColorID',
+																							'master_field' => 'ifkColorID'
+																						)
+																			)
+															),	
+									'smells' => array(
+													'child_key' => 'ipkSmellID',
+													'child_field' => 'ipkSmellID',
+													'master_field' => 'ifkSmellID'
+													)
+	
+									)
+					)							
 
-
+	);
 */
 $config['dbobj_link_prefix'] = 'Lnk_';
 $config['dbobj_link_tables'] = array();

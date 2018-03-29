@@ -199,6 +199,8 @@ class DB_Objectify extends CI_Model {
 		}
 		$linkData = $this->get_link_header($mastertable,$obectFileNames,$childTables,$linkFileName);
 		$linkData .= $this->generate_link_opendata_func($mastertable,$masterfield,$children,$linkFileName,$childTables);
+		$linkData .= $this->generate_link_find_functions($children);
+		
 	    $linkData .= "\r\n}\r\n ?>";
 		return $linkData;
 		
@@ -215,23 +217,36 @@ class DB_Objectify extends CI_Model {
 	 */
 	private function generate_link_find_functions($children){
 		$model_prefix = $this->config->item('dbobj_model_prefix');
-		$sData = '';
+		$sData ='';
 		foreach ($children as $childtable => $childdata) {
 			$childkey = $childdata['child_key'];	
 			$childfield = $childdata['child_field'];
 			$child_master_field = $childdata['master_field'];
 			$modelFileName = strtolower($model_prefix.$childtable);		
 			$sVar = 'o'.ucwords(strtolower($childtable),'_');	
-			$sData .= "\t\t\t\t\t \$this->load_child_data(\$this->$modelFileName,'$childkey',$targetObject->{$child_master_field},'$childfield',\$this->$sVar);\r\n";
+			$funcName =  'Find_'.ucwords(strtolower($childtable),'_');	
+			$sData .=    "\r\n\t\t/**\r\n".
+				"\t\t*  @brief Helps find the values for in object based on master child configuration for $sVar.\r\n".
+				"\t\t*  \r\n".
+				"\t\t*  @param [in] \$$childfield The value of $childfield inside $sVar\r\n".
+				"\t\t*  @return Object or Array of objects that are linked to \$$childfield\r\n".
+				"\t\t*  \r\n".
+				"\t\t*  @details Helps find the values for in object based on master child configuration for $sVar\r\n".
+				"\t\t*/\r\n".
+				"\t\t public function $funcName(\$$childfield){\r\n".
+				"\t\t\t \$iCount = count(\$this->$sVar);\r\n".
+				"\t\t\t \$Ans = null;\r\n".
+				"\t\t\t if (count(\$iCount) >= 1) {\r\n".
+				"\t\t\t\tforeach(\$this->$sVar as \$listItem){\r\n".
+				"\t\t\t\t\t if (\$listItem->$childfield == \$$childfield) {\r\n".
+				"\t\t\t\t\t\t \$Ans[] =  \$listItem;\r\n".
+				"\t\t\t\t\t }\r\n".
+				"\t\t\t\t}\r\n".
+				"\t\t\t}	\r\n".
+				"\t\t\t return \$Ans;	\r\n".
+				"\t\t}";
 			if ((isset($childdata['children'])) && (is_array($childdata['children']))) {
-				$tmptargetObject = "\$tmpC_".$sVar;
-				$sData .= "\t\t\t\t\t if (isset(\$this->$sVar)) { \r\n".
-					 "\t\t\t\t\t\t foreach(\$this->$sVar as $tmptargetObject) { \r\n";
-					$sData .= "\t\t".$this->generate_link_find_functions($childdata['children']);	 
-				
-				$sData .="\t\t\t\t\t\t } //end for \r\n";
-				$sData .="\t\t\t\t\t } //end if \r\n";
-					
+					$sData .= $this->generate_link_find_functions($childdata['children']);	 
 			}
 		}		
 		return $sData;

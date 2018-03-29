@@ -281,12 +281,12 @@ Variables</h2></td></tr>
 <p>Linking tables will try and create a class of a combination of models based on master child relationship. Child objects will always be created as a array with the key being the database value of the relationship setup. This automatically eliminates duplicate child entries to the master</p>
 <p>The is a 2 level array. The first level will hold the master table and his primary key. The second all child tables and there foreign keys and master table related fields</p>
 <p>for example:</p>
-<p>array( 'flowers' =&gt; array( 'key' =&gt; 'ipkFlowerID', 'children' =&gt; array('colors' =&gt; array( 'child_key' =&gt; 'ipkColorID', 'child_field' =&gt; 'ipkColorID', 'master_field' =&gt; 'ifkColorID' ), <br />
+<p>array( 'flowers' =&gt; array( 'key' =&gt; 'ipkFlowerID', 'children' =&gt; array( 'flower_color_lnk' =&gt; array( 'child_key' =&gt; 'ipkLinkID', 'child_field' =&gt; 'ifkFlowerID', 'master_field' =&gt; 'ipkFlowerID', 'children' =&gt; array( 'colors' =&gt; array( 'child_key' =&gt; 'ipkColorID', 'child_field' =&gt; 'ipkColorID', 'master_field' =&gt; 'ifkColorID' ) ) ), <br />
  'smells' =&gt; array( 'child_key' =&gt; 'ipkSmellID', 'child_field' =&gt; 'ipkSmellID', 'master_field' =&gt; 'ifkSmellID' )</p>
 <p>) ) <br />
  ); </p>
 
-<p class="definition">Definition at line <a class="el" href="config_2dbobjectify_8php_source.html#l00078">78</a> of file <a class="el" href="config_2dbobjectify_8php_source.html">dbobjectify.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_2dbobjectify_8php_source.html#l00084">84</a> of file <a class="el" href="config_2dbobjectify_8php_source.html">dbobjectify.php</a>.</p>
 
 </div>
 </div>
@@ -302,7 +302,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="config_2dbobjectify_8php_source.html#l00079">79</a> of file <a class="el" href="config_2dbobjectify_8php_source.html">dbobjectify.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_2dbobjectify_8php_source.html#l00085">85</a> of file <a class="el" href="config_2dbobjectify_8php_source.html">dbobjectify.php</a>.</p>
 
 </div>
 </div>
